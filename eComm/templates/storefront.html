@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PokeMart</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class='store'>
+        <img src="{% static 'images/logo1.jpg' %}">
+        <h1>Welcome to the PokeMart!</h1>
+    <form action='addItem/' method='post'>
+        {% csrf_token %}
+        <section>
+            <label for='itemName'>Item Name:</label>
+            <input name='itemName' type='text'>
+        </section>
+        <section>
+            <label for='description'>Item Description: </label>
+            <textarea name='description'></textarea>
+        </section>
+        <section>
+            <label for='price'>Price: </label>
+            <input name='price' type='text'>
+        </section>
+        <p><button class="btn btn-danger btn-sm">Create Item</button></p>
+    </form>
+    {% for item in allItems %}
+    <form action='/checkout/' method='post'>
+        {% csrf_token %}
+        <h3>{{item.itemName}}</h3>
+        <section>
+            <h4>{{item.price}}</h4>
+        </section>
+        <section>
+            <select name='quantity'>
+                <option value='1'>1</option>
+                <option value='2'>2</option>
+                <option value='3'>3</option>
+            </select>
+        </section>
+        <button class="btn btn-success btn-sm">Add to Cart</button>
+        <!-- <button class = "btn btn-warning btn-sm" name="DeleteButton" value="{{ item.id }}">Delete Item</button> -->
+    </form>
+    {% endfor %}
+        <a href="/checkout"><button class="btn btn-primary">Checkout</button></a>
+        <a href="/logout"><button class="btn btn-primary">Logout</button></a>
+    </div>
+</body>
+</html>
